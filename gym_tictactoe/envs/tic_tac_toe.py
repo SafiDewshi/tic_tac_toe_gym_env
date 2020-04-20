@@ -22,7 +22,6 @@ class TicTacToe(gym.Env):
         self.reward_range = (-10, 1)
         self.board = np.zeros((3, 3))
         self.turn = 0
-        self.active_player = self.turn % 2
         self.default_reward = 0
         self.invalid_move_reward = -10
         self.win_reward = 1
@@ -58,6 +57,7 @@ class TicTacToe(gym.Env):
         invalid_move_reward = self.invalid_move_reward
         win_reward = self.win_reward
         loss_reward = self.loss_reward
+        active_player = self.turn % 2
 
         # Check move is not invalid
         if self._invalid_move(action):
@@ -65,13 +65,13 @@ class TicTacToe(gym.Env):
 
         # update the board with provided move
         self._take_action(action)
-        self.step += 1
+        self.turn += 1
 
         # check move does not end the game
         if self._game_over():
             done = True
             winner = self._game_over()
-            if winner == self.active_player + 1:
+            if winner == active_player + 1:
                 reward = win_reward
             else:
                 reward = loss_reward
