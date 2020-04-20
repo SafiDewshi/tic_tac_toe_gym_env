@@ -23,6 +23,10 @@ class TicTacToe(gym.Env):
         self.board = np.zeros((3, 3))
         self.turn = 0
         self.active_player = self.turn % 2
+        self.default_reward = 0
+        self.invalid_move_reward = -10
+        self.win_reward = 1
+        self.loss_reward = -1
 
         self.action_space = spaces.Box(
             low=np.array([0, 0]),
@@ -37,19 +41,40 @@ class TicTacToe(gym.Env):
         )
 
     def step(self, action):
-        # execute one timestep
-        done = False
-        reward = 0
+        """Execute one timestep.
+        Args:
+            action (coordinate to play piece
 
+        Returns:
+            Observation
+            Reward
+            Done
+            Aditional Information
+            """
+        # execute one timestep
+
+        done = False
+        reward = self.default_reward
+        invalid_move_reward = self.invalid_move_reward
+        win_reward = self.win_reward
+        loss_reward = self.loss_reward
+
+        # Check move is not invalid
+        if self._invalid_move(action):
+            return self.board, invalid_move_reward, True
+
+        # update the board with provided move
         self._take_action(action)
         self.step += 1
 
-        if self._invalid_move(action):
-            done = True
-            reward = -10
-
+        # check move does not end the game
         if self._game_over():
             done = True
+            winner = self._game_over()
+            if winner == self.active_player + 1:
+                reward = win_reward
+            else:
+                reward = loss_reward
 
         return self.board, reward, done
 
@@ -68,8 +93,8 @@ class TicTacToe(gym.Env):
         pass
 
     def _take_action(self, action):
-        #
-        pass
+        """update the board with the provided action (n,n), 0=<n=<2"""
+        self.board[action] = self.active_player + 1
 
     def _invalid_move(self, action):
         return self.board[action] != 0
