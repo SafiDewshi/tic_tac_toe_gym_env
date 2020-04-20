@@ -82,6 +82,8 @@ class TicTacToe(gym.Env):
         # reset environment to initial state
         self.board = np.zeros((3, 3))
         self.turn = 0
+        return self.board
+
 
     def render(self, mode='human'):
         # render environment to screen
