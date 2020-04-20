@@ -21,8 +21,8 @@ class TicTacToe(gym.Env):
         # )
         self.reward_range = (-10, 1)
         self.board = np.zeros((3, 3))
-        self.turn = 1
-        self.step = 0
+        self.turn = 0
+        self.active_player = self.turn % 2
 
         self.action_space = spaces.Box(
             low=np.array([0, 0]),
@@ -56,10 +56,15 @@ class TicTacToe(gym.Env):
     def reset(self):
         # reset environment to initial state
         self.board = np.zeros((3, 3))
-        self.turn = 1
+        self.turn = 0
 
     def render(self, mode='human'):
         # render environment to screen
+        self._draw_board()
+
+        pass
+
+    def close(self):
         pass
 
     def _take_action(self, action):
@@ -92,3 +97,17 @@ class TicTacToe(gym.Env):
         return False
 
         pass
+
+    def _draw_board(self):
+        """renders the board"""
+        d = {0: " ", 1: "X", 2: "O"}
+        # dict to translate ints to X and O
+
+        b = np.vectorize(d.get)(self.board.astype(int))
+        print(
+            f"{b[0, 0]}|{b[0, 1]}|{b[0, 2]}\n"
+            "-+-+-\n"
+            f"{b[1, 0]}|{b[1, 1]}|{b[1, 2]}\n"
+            "-+-+-\n"
+            f"{b[2, 0]}|{b[2, 1]}|{b[2, 2]}\n"
+        )
