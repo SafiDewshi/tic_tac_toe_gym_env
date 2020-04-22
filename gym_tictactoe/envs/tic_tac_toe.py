@@ -84,7 +84,6 @@ class TicTacToe(gym.Env):
         self.turn = 0
         return self.board
 
-
     def render(self, mode='human'):
         # render environment to screen
         self._draw_board()
