@@ -22,9 +22,9 @@ class TicTacToe(gym.Env):
         self.reward_range = (-10, 1)
         self.board = np.zeros((3, 3))
         self.turn = 0
-        self.default_reward = 0
-        self.invalid_move_reward = -10
-        self.win_reward = 1
+        self.default_reward = 1
+        self.invalid_move_reward = -20
+        self.win_reward = 10
         self.loss_reward = -1
         self.active_player = 1
 
