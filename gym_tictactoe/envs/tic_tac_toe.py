@@ -95,7 +95,7 @@ class TicTacToe(gym.Env):
 
     def _take_action(self, action):
         """update the board with the provided action (n,n), 0=<n=<2"""
-        self.board[action] = self.active_player
+        self.board[action] = self.active_player/2
 
     def _invalid_move(self, action):
         return self.board[action] != 0
