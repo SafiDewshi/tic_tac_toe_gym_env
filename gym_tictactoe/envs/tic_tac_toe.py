@@ -129,7 +129,7 @@ class TicTacToe(gym.Env):
 
     def _draw_board(self):
         """renders the board"""
-        d = {0: " ", 1: "X", 2: "O"}
+        d = {0: " ", -1: "X", 1: "O"}
         # dict to translate ints to X and O
 
         b = np.vectorize(d.get)(self.board.astype(int))
