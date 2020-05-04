@@ -25,7 +25,7 @@ class TicTacToe(gym.Env):
         self.default_reward = 1
         self.invalid_move_reward = -20
         self.win_reward = 10
-        self.loss_reward = -1
+        self.loss_reward = -10
         self.active_player = 1
 
         self.action_space = spaces.Box(
