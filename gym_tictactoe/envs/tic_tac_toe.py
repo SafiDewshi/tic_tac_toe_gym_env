@@ -88,8 +88,6 @@ class TicTacToe(gym.Env):
         # render environment to screen
         self._draw_board()
 
-        pass
-
     def close(self):
         pass
 
